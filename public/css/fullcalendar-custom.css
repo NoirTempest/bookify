@@ -1,0 +1,30 @@
+/* fullcalendar-custom.css */
+.fc-timegrid-slot {
+    height: 50px !important;
+}
+
+.fc-timegrid-now-indicator-line {
+    background-color: #a32dff !important;
+    height: 3px !important;
+}
+
+.fc-timeGridDay-view .fc-timegrid-event {
+    width: 180px !important;
+    max-width: 180px !important;
+    min-width: 180px !important;
+}
+
+.fc-timegrid-now-indicator-arrow {
+    border-top-color: #a32dff !important;
+}
+
+/* Remove background highlight from current day */
+.fc .fc-timegrid-col.fc-day-today,
+.fc .fc-daygrid-day.fc-day-today {
+    background-color: transparent !important;
+}
+#calendar {
+    height: 500px; /* or any height */
+    max-height: auto; /* optional, to limit max height */
+}
+
