@@ -105,7 +105,7 @@
 
                         <!-- Button -->
                         <div class="d-flex justify-content-between">
-                            <button type="button" class="btn btn-outline-custom"
+                            <button id="btnShowCalendar" type="button" class="btn btn-outline-custom"
                                 @click="showCalendar = true; setTimeout(() => { initCalendar(); bindTimeSlotEvents(); }, 300)">
                                 Check Availability
                             </button>

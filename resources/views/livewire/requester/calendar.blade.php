@@ -3,8 +3,11 @@
         <div id="calendar"></div>
     </div>
 
-    {{-- Livewire Component for Modal --}}
-    <livewire:requester.conference-room-booking />
+    @php
+        $assetTypes = \App\Models\AssetType::all();
+        $assetDetails = \App\Models\AssetDetail::all();
+    @endphp
+    @include('livewire.requester.modal.bookingModal', compact('assetTypes', 'assetDetails'))
 
     @push('styles')
     <link rel="stylesheet" href="{{ asset('css/fullcalendar-custom.css') }}">
@@ -15,6 +18,7 @@
         window.calendarEvents = @json($events);
     </script>
     <script src="{{ asset('js/fullcalendar-init.js') }}"></script>
+    <script src="{{ asset('js/custom.js') }}"></script>
     @endpush
     
 </div>

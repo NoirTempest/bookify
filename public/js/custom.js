@@ -129,6 +129,27 @@ document.addEventListener("DOMContentLoaded", () => {
     modal?.addEventListener("shown.bs.modal", () => {
         bindTimeSlotEvents();
         initCalendar();
+
+        if (window.prefillDateStr) {
+            const dateStr = window.prefillDateStr;
+            const dateInput = document.getElementById("selected_date");
+            if (dateInput) dateInput.value = dateStr;
+
+            const pickedDateEl = document.getElementById("calendar-picked-date");
+            if (pickedDateEl) pickedDateEl.textContent = dateStr;
+
+            try {
+                Alpine.store("step").showCalendar = true;
+                Alpine.store("step").date = dateStr;
+            } catch (e) {}
+
+            // Load availability for the preselected date
+            if (typeof loadSlotAvailability === "function") {
+                loadSlotAvailability(dateStr);
+            }
+
+            window.prefillDateStr = null;
+        }
     });
     modal?.addEventListener("hidden.bs.modal", () => {
         if (window.calendarInst) window.calendarInst.destroy();
@@ -187,7 +208,7 @@ function formatTime(hm) {
 }
 
 function initCalendar() {
-    const el = document.getElementById("calendar");
+    const el = document.querySelector('#bookingModal #calendar') || document.getElementById('calendar');
     if (!el) return;
     if (window.calendarInst) window.calendarInst.destroy();
 
