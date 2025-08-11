@@ -25,12 +25,7 @@
 
                             @if($asset_type_id && $vehicle_type_id && (int)$asset_type_id === (int)$vehicle_type_id)
                             <!-- Vehicle-specific fields -->
-                            <div class="mb-3">
-                                <label class="form-label">Purpose</label>
-                                <textarea class="form-control" rows="3" wire:model="purpose" required></textarea>
-                                @error('purpose') <div class="text-danger small">{{ $message }}</div> @enderror
-                            </div>
-
+                            <!-- Removed Purpose field per requirements -->
                             <div class="mb-3">
                                 <label class="form-label">Destination</label>
                                 <input type="text" class="form-control" wire:model="destination" required />
@@ -87,7 +82,7 @@
 
                             <!-- Guests -->
                             <div class="mb-3">
-                                <label class="form-label">Add Guests</label>
+                                <label class="form-label">Add guest</label>
                                 <div class="">
                                     @foreach($guests as $index => $email)
                                         <div class="row g-2 align-items-center mb-2" wire:key="guest-row-{{ $index }}">
