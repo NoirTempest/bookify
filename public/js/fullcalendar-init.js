@@ -113,36 +113,34 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // Handle date clicks for modal input
         dateClick: function (info) {
-            const clickedDateUTC = new Date(info.date);
+            // Store clicked date for booking modal prefill
+            window.prefillDateStr = info.dateStr;
 
-            // Convert UTC to Philippine Time (UTC+8)
-            const clickedDate = new Date(
-                clickedDateUTC.getTime() + 8 * 60 * 60 * 1000
-            );
-
-            // Format date as YYYY-MM-DD
+            // Backward compatibility: fill simple date/time inputs if present
             const dateInput = document.getElementById("selectedDateOnly");
             if (dateInput) {
-                dateInput.value = clickedDate.toISOString().slice(0, 10);
+                dateInput.value = info.dateStr;
                 dateInput.dispatchEvent(new Event("input", { bubbles: true }));
             }
-
-            // Format time as HH:MM
             const timeInput = document.getElementById("selectedTimeOnly");
             if (timeInput) {
-                const hours = clickedDate
-                    .getHours()
-                    .toString()
-                    .padStart(2, "0");
-                const minutes = clickedDate
-                    .getMinutes()
-                    .toString()
-                    .padStart(2, "0");
+                const now = new Date();
+                const hours = now.getHours().toString().padStart(2, "0");
+                const minutes = now.getMinutes().toString().padStart(2, "0");
                 timeInput.value = `${hours}:${minutes}`;
                 timeInput.dispatchEvent(new Event("input", { bubbles: true }));
             }
 
-            // Show the modal
+            // Prefer the new booking modal if available
+            const bookingModalEl = document.getElementById("bookingModal");
+            if (bookingModalEl) {
+                const modalInstance =
+                    bootstrap.Modal.getOrCreateInstance(bookingModalEl);
+                modalInstance.show();
+                return;
+            }
+
+            // Fallback to legacy date modal
             const dateModalEl = document.getElementById("dateModal");
             if (dateModalEl) {
                 const modalInstance =
@@ -186,7 +184,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
 
         const modal = bootstrap.Modal.getInstance(
-            document.getElementById("dateModal")
+            document.getElementById("bookingModal")
         );
         if (modal) modal.hide();
     });
